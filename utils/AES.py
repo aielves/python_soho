@@ -8,7 +8,6 @@ key = "N6(lWQGN#O+OQ5ev"
 def pad_text(encrypted_text):
     while len(encrypted_text) % 16 != 0:
         encrypted_text += "\0"
-    print(encrypted_text)
     return encrypted_text
 
 
@@ -16,7 +15,6 @@ def pad_text(encrypted_text):
 def pad_key(key):
     while len(key) % 16 != 0:
         key += "\0"
-    print(key)
     return key
 
 
@@ -44,7 +42,9 @@ def encrypt(encrypted_text, encrypted_key):
 
 
 if __name__ == "__main__":
-    s = encrypt("123_hello world!", key)
-    print(s)
+    s = "hello world! 123456789";
+    print("加密前: " + s)
+    s = encrypt(s, key)
+    print("加密后: " + s)
     s = decrypt(s, key)
-    print(s)
+    print("解密后: " + s)

@@ -29,13 +29,24 @@ class Condition:
         self.value = value
 
 
+class Pageable:
+    def __init__(self, pageNo, pageSize):
+        self.pageNo = pageNo
+        self.pageSize = pageSize
+        self.pageTotal = 0
+        self.pageNumber = 0
+        self.data = None
+
+
 class Cnd:
-    coditArr = []
-    limitArr = []
-    distinctArr = []
-    groupbyArr = []
-    fieldsArr = []
-    otherArr = []
+    def __init__(self):
+        self.coditArr = []
+        self.distinctArr = []
+        self.groupbyArr = []
+        self.fieldsArr = []
+        self.otherArr = []
+        self.onlyField = ""
+        self.pageable = None
 
     # 等于条件
     def eq(self, key, value):
@@ -114,8 +125,7 @@ class Cnd:
 
     # 分页条件
     def limit(self, pageNo, pageSize):
-        self.limitArr.append(pageNo);
-        self.limitArr.append(pageSize);
+        self.pageable = Pageable(pageNo, pageSize)
         return self;
 
     # 字段去重条件
@@ -143,9 +153,16 @@ class Cnd:
 
     # 指定查询单个字段列
     def only(self, key):
-        self.fieldsArr = []
-        self.fieldsArr.append(key)
+        self.onlyField = str(key)
         return self;
+
+    # 获取逻辑条件集合
+    def getConditions(self):
+        return self.coditArr
+
+    # 获取分页对象
+    def getPageable(self):
+        return self.pageable
 
     # 根据条件更新字段
     def addUpdateKeyValue(self, key, value):
@@ -157,22 +174,33 @@ class Cnd:
         pass
         return self;
 
-    # 获取逻辑条件集合
-    def getConditions(self):
-        return self.coditArr
-
-    # 获取分页对象
-    def getPagination(self):
-        pass
+    def clone(self):
+        cnd = Cnd()
+        cnd.coditArr = self.coditArr
+        cnd.distinctArr = self.distinctArr
+        cnd.groupbyArr = self.groupbyArr
+        cnd.fieldsArr = self.fieldsArr
+        cnd.otherArr = self.otherArr
+        cnd.onlyField = self.onlyField
+        cnd.pageable = self.pageable
+        return cnd
 
 
 if __name__ == '__main__':
-    cnd = Cnd();
-    cnd.eq("id", 1).in_("test", 1).fields("id", "name", "nick")
-    for cdn in cnd.coditArr:
-        s = getattr(cdn, "symbol")
-        print(s)
+    cnd1 = Cnd();
+    cnd1.eq("id", 1).in_("test", 1, 2).fields("id", "name", "nick").only("test").limit(1, 10)
+
+    cnd = cnd1.clone()
+
+
+    for condition in cnd.coditArr:
+        print(str(condition.symbol) + "---" + str(condition.key) + "---" + str(condition.value))
     for field in cnd.fieldsArr:
         print(field)
     for goupby in cnd.groupbyArr:
         print(goupby)
+    print(cnd.onlyField)
+
+    pageable = cnd.pageable
+    if (pageable != None):
+        print(str(pageable.pageNo) + "---" + str(pageable.pageSize))
