@@ -1,3 +1,10 @@
+"""
+@created by shadow on 2018.01.02
+@resume SQL逻辑运算实现
+"""
+
+# -*- coding: UTF-8 -*-
+
 class SqlSymbol:
     EQ = " = "
     NOTEQ = " <> "

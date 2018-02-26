@@ -1,3 +1,11 @@
+"""
+@created by shadow on 2018.01.02
+@resume SQL默认CRUD功能实现
+"""
+
+
+# -*- coding: UTF-8 -*-
+
 class IDEntity:
     def __init__(self):
         self.id = None

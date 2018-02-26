@@ -1,3 +1,8 @@
+"""
+@created by shadow on 2018.01.02
+@resume 数据库连接配置信息
+"""
+
 # -*- coding: UTF-8 -*-
 
 # TEST数据库信息

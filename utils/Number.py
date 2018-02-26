@@ -1,10 +1,12 @@
+"""
+@created by shadow on 2018.01.02
+@resume 科学计算工具类,加减乘除保留自定义有效小数位(不保留四舍五入)
+"""
+
+# -*- coding: UTF-8 -*-
+
 import decimal
 
-
-# Created by shadow on 2018/2/1.
-# 科学计算工具类
-# 加减乘除保留自定义有效小数位(不保留四舍五入)
-# 数值类型数值快速比较大小
 
 def add(number1, number2, scale):
     return fmt(str(decimal.Decimal(number1).__add__(decimal.Decimal(number2))), scale)

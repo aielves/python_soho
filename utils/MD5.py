@@ -1,3 +1,10 @@
+"""
+@created by shadow on 2018.01.02
+@resume MD5加密工具类实现
+"""
+
+# -*- coding: UTF-8 -*-
+
 import hashlib
 
 
